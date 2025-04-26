@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Microscope Size Calculator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Microscope Size Calculator</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash-message {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" required>
+        
+        <label for="microscope_size">Microscope size (μm):</label>
+        <input type="number" step="0.01" name="microscope_size" required>
+        
+        <label for="magnification">Magnification:</label>
+        <input type="number" step="0.01" name="magnification" required>
+        
+        <button type="submit">Calculate and Store</button>
+    </form>
+
+    <h2>Stored Specimens</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Microscope Size (μm)</th>
+                <th>Magnification</th>
+                <th>Actual Size (μm)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for specimen in specimens %}
+            <tr>
+                <td>{{ specimen['username'] }}</td>
+                <td>{{ specimen['microscope_size'] }}</td>
+                <td>{{ specimen['magnification'] }}</td>
+                <td>{{ specimen['actual_size'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
